@@ -14,6 +14,7 @@
 		35D227D828D25AED0048DB68 /* PlantTrackerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D227D728D25AED0048DB68 /* PlantTrackerTests.swift */; };
 		35D227E228D25AED0048DB68 /* PlantTrackerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D227E128D25AED0048DB68 /* PlantTrackerUITests.swift */; };
 		35D227E428D25AED0048DB68 /* PlantTrackerUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D227E328D25AED0048DB68 /* PlantTrackerUITestsLaunchTests.swift */; };
+		35D227F228D26E530048DB68 /* Plant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D227F128D26E530048DB68 /* Plant.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +45,7 @@
 		35D227DD28D25AED0048DB68 /* PlantTrackerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PlantTrackerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		35D227E128D25AED0048DB68 /* PlantTrackerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlantTrackerUITests.swift; sourceTree = "<group>"; };
 		35D227E328D25AED0048DB68 /* PlantTrackerUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlantTrackerUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		35D227F128D26E530048DB68 /* Plant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Plant.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,6 +96,7 @@
 		35D227C528D25AEB0048DB68 /* PlantTracker */ = {
 			isa = PBXGroup;
 			children = (
+				35D227F028D26E2B0048DB68 /* Models */,
 				35D227C628D25AEB0048DB68 /* PlantTrackerApp.swift */,
 				35D227C828D25AEB0048DB68 /* ContentView.swift */,
 				35D227CA28D25AED0048DB68 /* Assets.xcassets */,
@@ -125,6 +128,14 @@
 				35D227E328D25AED0048DB68 /* PlantTrackerUITestsLaunchTests.swift */,
 			);
 			path = PlantTrackerUITests;
+			sourceTree = "<group>";
+		};
+		35D227F028D26E2B0048DB68 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				35D227F128D26E530048DB68 /* Plant.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -258,6 +269,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				35D227C928D25AEB0048DB68 /* ContentView.swift in Sources */,
+				35D227F228D26E530048DB68 /* Plant.swift in Sources */,
 				35D227C728D25AEB0048DB68 /* PlantTrackerApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

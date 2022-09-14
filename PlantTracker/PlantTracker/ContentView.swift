@@ -13,12 +13,13 @@ struct ContentView: View {
             Image(systemName: "leaf")
                 .imageScale(.large)
                 .foregroundColor(.accentColor)
+            //Spacer()
             Button(action: {
                 print("watering plants")
             }) {
                 Text("WATER")
                     .fontWeight(.bold)
-                    .font(.title)
+                    .font(.body)
                     .padding()
                     .background(Color.green)
                     .cornerRadius(40)
