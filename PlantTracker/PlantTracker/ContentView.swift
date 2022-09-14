@@ -17,6 +17,17 @@ struct ContentView: View {
                 print("watering plants")
             }) {
                 Text("WATER")
+                    .fontWeight(.bold)
+                    .font(.title)
+                    .padding()
+                    .background(Color.green)
+                    .cornerRadius(40)
+                    .foregroundColor(.white)
+                    .padding(10)
+                    .overlay(
+                            RoundedRectangle(cornerRadius: 40)
+                                .stroke(Color.green, lineWidth: 5)
+                        )
             }
         }
         .padding()
