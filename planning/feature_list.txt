@@ -1,0 +1,33 @@
+Goal: Create an easy way to keep track of plant watering schedules through a simple input system and user interface.
+
+Core: first implementation
+Additional features: to be added in the future
+Features:
+- add plants to your app:
+  - Core: includes name, how often it needs to be watered, date you last watered it, notes section
+  - Additional features: 
+      - picture of plant (can be just to see what it looks like, or a sort of plant growing journey with multiple pictures (app can prompt every x days, months), 
+  
+- Water plants 
+  - Core: button with water drop, updates database to say it was watered when button was pushed
+  
+- Tracker
+  - Core: list of plants in order of need to be watered - auto updates, edit button to adjust plant info, add new plant, delete plant
+  - Additional features: 
+      - color coded (red for urgent, yellow for water soon, green good/ or choose a color (user could pick) and have it ombre)
+      
+- Care help
+  - Core: Static page to show how to care for certain plants
+  - Future: more customized instructions
+  
+  
+Core Pages:
+- Home/Dashboard:
+  - list of plants, water button next to each
+  - button to add plants
+- Add plant page: input plant info, cancel button
+- Edit page: 
+  - allows you delete and update info
+  
+Future page:
+- Calender page: calender view of when to water
