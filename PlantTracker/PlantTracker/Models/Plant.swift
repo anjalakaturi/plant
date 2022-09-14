@@ -7,7 +7,7 @@
 
 import Foundation
 
-class Plant {
+struct Plant {
     var now: Date = Date()
     var name: String
     var duration: TimeInterval
