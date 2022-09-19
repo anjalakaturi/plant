@@ -13,28 +13,33 @@ struct PlantRow: View {
 
     var body: some View {
         HStack {
-                    Text(plant.name)
-                    
-                    Spacer()
-            Text("WATER")
+            Spacer()
+            Text(plant.name)
+                .font(.largeTitle)
+            
+            Spacer()
+            Image(systemName: "drop")
+                .imageScale(.large)
+                .foregroundColor(.white)
                 .fontWeight(.bold)
                 .font(.body)
-                .padding()
-                .background(Color.green)
-                .cornerRadius(40)
+                .padding(8.0)
+                .background(Color.blue)
+                .cornerRadius(30)
                 .foregroundColor(.white)
-                .padding(10)
+                .padding(5)
                 .overlay(
-                        RoundedRectangle(cornerRadius: 40)
-                            .stroke(Color.green, lineWidth: 5)
-                    )
-                }
+                    RoundedRectangle(cornerRadius: 30)
+                        .stroke(Color.blue, lineWidth: 5)
+                )
+            Spacer()
+        }
     }
 }
 
 struct PlantRow_Previews: PreviewProvider {
     static var previews: some View {
-        PlantRow(plant: Plant(plantName: "plant1", daysBtWatering: 7.0, lastWatered: Date()))
+        PlantRow(plant: Plant(plantName: "Plant Name", daysBtWatering: 7.0, lastWatered: Date()))
         
     }
 }
