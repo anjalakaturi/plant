@@ -10,26 +10,51 @@ import Foundation
 struct Plant {
     var now: Date = Date() //current Date
     var name: String //name of plant
-    var duration: TimeInterval //time (days) between watering
+    var duration: Double //time (days) between watering
     var dateLastWatered: Date //date last watered
-    var daysLeft: TimeInterval //time (days) until plant needs to be watered
-    var isReadyToWater: Bool
-    
+
     //dateLastWatered + duration = new date
     //days from today till new date
-    var daysBeforeWatering: Int64 {
-        1
-        //dateLastWatered.distance()
+    var daysBeforeWatering: Double {
+        var durationToSec = daysToSeconds(time: duration)
+        var whenToWater = dateLastWatered.addingTimeInterval(durationToSec)
+        var timeBeforeWater = now.timeIntervalSince(whenToWater)
+        return secondsToDays(time: timeBeforeWater)
+    }
+    
+    var isReadyToWater: Bool {
+        if (daysBeforeWatering == 0){
+            return true
+        }
+        else{
+            return false
+        }
+    }
+    
+    //convert from TimeInterval to # days
+    func secondsToDays(time: TimeInterval) -> Double {
+        let toMinutes = time/60
+        let toHours = toMinutes/60
+        let toDays = toHours/24
+        return ceil(toDays)
+    }
+    
+    //convert from # days to seconds
+    func daysToSeconds(time: Double) -> TimeInterval {
+        let toHours = time * 24
+        let toMin = toHours * 60
+        let toSec = toMin * 60
+        return TimeInterval(toSec)
     }
     
     //initializer:
     //Params: plantName (name of plant), daysBtWatering (days until it needs to be watered)
     //lastWatered: date plant was last watered
-    init(plantName: String, daysBtWatering: TimeInterval, lastWatered: Date){
+    init(plantName: String, daysBtWatering: Double, lastWatered: Date){
         name = plantName
         duration = daysBtWatering
         dateLastWatered = lastWatered
-        daysLeft = now.timeIntervalSince(dateLastWatered)
-        isReadyToWater = false;
     }
+    
+    
 }

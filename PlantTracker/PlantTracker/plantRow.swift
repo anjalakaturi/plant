@@ -18,22 +18,28 @@ struct PlantRow: View {
                 .font(.largeTitle)
             
             Spacer()
-            Image(systemName: "drop")
-                .imageScale(.large)
-                .foregroundColor(.white)
-                .fontWeight(.bold)
-                .font(.body)
-                .padding(8.0)
-                .background(Color.blue)
-                .cornerRadius(30)
-                .foregroundColor(.white)
-                .padding(5)
-                .overlay(
-                    RoundedRectangle(cornerRadius: 30)
-                        .stroke(Color.blue, lineWidth: 5)
-                )
+            Button(action: {
+                print("watering plants")
+            }) {
+                Image(systemName: "drop")
+                    .imageScale(.large)
+                    .foregroundColor(.white)
+                    .fontWeight(.bold)
+                    .font(.body)
+                    .padding(8.0)
+                    .background(Color.blue)
+                    .cornerRadius(30)
+                    .foregroundColor(.white)
+                    .padding(5)
+            }
             Spacer()
         }
+        .background(Color.gray)
+        .cornerRadius(30)
+        .overlay(
+            RoundedRectangle(cornerRadius: 30)
+                .stroke(Color.green, lineWidth: 5)
+        )
     }
 }
 

@@ -8,7 +8,7 @@
 import Foundation
 
 class PlantList {
-    var list: [Plant] = []
+    var list: [Plant]
     
     func addPlant(plantToAdd: Plant){
         list.append(plantToAdd)
@@ -16,7 +16,6 @@ class PlantList {
     
     //sorts the list of plants in order from least to most days until it needs to be watered
     func sort(){
-        //var temp: [Plant] = list
         for index in 2...list.count {
             if(list[index].daysLeft < list[index - 1].daysLeft){
                 //swap
@@ -28,6 +27,6 @@ class PlantList {
     }
     
     init(){
-        
+        list = []
     }
 }
