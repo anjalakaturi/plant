@@ -9,25 +9,31 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        VStack {
+        HStack {
             Image(systemName: "leaf")
                 .imageScale(.large)
                 .foregroundColor(.accentColor)
             //Spacer()
+            if let testPlant = PlantData.p0
+            {
+                Text("\(testPlant.name)")
+            } else {
+                Text("No person found.")
+            }
             Button(action: {
                 print("watering plants")
             }) {
                 Text("WATER")
                     .fontWeight(.bold)
                     .font(.body)
-                    .padding()
-                    .background(Color.green)
+                    .padding(5)
+                    .background(Color.blue)
                     .cornerRadius(40)
                     .foregroundColor(.white)
-                    .padding(10)
+                    .padding(5)
                     .overlay(
                             RoundedRectangle(cornerRadius: 40)
-                                .stroke(Color.green, lineWidth: 5)
+                                .stroke(Color.blue, lineWidth: 4)
                         )
             }
         }

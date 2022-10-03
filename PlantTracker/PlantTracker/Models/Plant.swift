@@ -16,9 +16,9 @@ struct Plant {
     //dateLastWatered + duration = new date
     //days from today till new date
     var daysBeforeWatering: Double {
-        var durationToSec = daysToSeconds(time: duration)
-        var whenToWater = dateLastWatered.addingTimeInterval(durationToSec)
-        var timeBeforeWater = now.timeIntervalSince(whenToWater)
+        let durationToSec = daysToSeconds(time: duration)
+        let whenToWater = dateLastWatered.addingTimeInterval(durationToSec)
+        let timeBeforeWater = now.timeIntervalSince(whenToWater)
         return secondsToDays(time: timeBeforeWater)
     }
     

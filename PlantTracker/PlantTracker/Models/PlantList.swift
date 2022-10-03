@@ -15,7 +15,7 @@ class PlantList {
     }
     
     //sorts the list of plants in order from least to most days until it needs to be watered
-    func sort(){
+ /*   func sort(){
         for index in 2...list.count {
             if(list[index].daysLeft < list[index - 1].daysLeft){
                 //swap
@@ -24,7 +24,7 @@ class PlantList {
                 list[index - 1] = tempPlant
             }
         }
-    }
+    } */
     
     init(){
         list = []
