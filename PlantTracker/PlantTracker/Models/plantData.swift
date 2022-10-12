@@ -8,25 +8,26 @@
 import Foundation
 
 struct PlantData: Codable {
-    var name: String
-    //var dateWatered: String
-    //var daysBtWater: String
+    var id: String
+    var plantName: String
+    var DateLastWatered: String
+    var DaysBetweenWatering: String
+    var plantType: String
     
-    static var p0: PlantData? {
-        PlantData.fromJSON(named: "plantFile")
+    static var listOfPlants: [PlantData]? {
+        PlantData.fromJSON(named: "plantInfo")
     }
 
-    static func fromJSON(named name: String) -> PlantData? {
-        //return
+    static func fromJSON(named name: String) -> [PlantData] {
         if let data = Data.fromJSONFile(forName: name) {
             let decoder = JSONDecoder()
             do {
-                let luke = try decoder.decode(PlantData.self, from: data)
-                return luke
+                let plantList = try decoder.decode([PlantData].self, from: data)
+                return plantList
             } catch {
                 print("Could not make person from data.", error.localizedDescription)
             }
         }
-        return nil
+        return []
     }
 }
