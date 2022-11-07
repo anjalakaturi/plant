@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ContentView: View {
-    var plantList = PlantData.listOfPlants!
+    var plantList : [Plant] = PlantList().getListOfPlants()
     var body: some View {
         VStack{
             ForEach(0..<5) { i in
@@ -16,13 +16,8 @@ struct ContentView: View {
                     Image(systemName: "leaf")
                         .imageScale(.large)
                         .foregroundColor(.accentColor)
-                    //Spacer()
                     let testPlant = plantList[i]
-                    //{
-                    Text("\(testPlant.plantName)")
-                    //                } else {
-                    //                    Text("No person found.")
-                    //                }
+                    Text("\(testPlant.name)")
                     Button(action: {
                         print("watering plants")
                     }) {
@@ -39,7 +34,7 @@ struct ContentView: View {
                                     .stroke(Color.blue, lineWidth: 4)
                             )
                     }
-                    Text("\(testPlant.DaysBetweenWatering)")
+                    Text("\(testPlant.duration)")
                 }
                 .padding()
             }
