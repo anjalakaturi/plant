@@ -50,6 +50,10 @@ struct Plant {
         return 1.0
     }
     
+    mutating func plantWatered(){
+        dateLastWatered = Date()
+    }
+    
     //initializer:
     //Params: plantName (name of plant), daysBtWatering (days until it needs to be watered)
     //lastWatered: date plant was last watered

@@ -16,10 +16,10 @@ struct ContentView: View {
                     Image(systemName: "leaf")
                         .imageScale(.large)
                         .foregroundColor(.accentColor)
-                    let testPlant = plantlist[i]
+                    var testPlant = plantlist[i]
                     Text("\(testPlant.name)")
                     Button(action: {
-                        print("watering plants")
+                        testPlant.plantWatered()
                     }) {
                         Text("WATER")
                             .fontWeight(.bold)
