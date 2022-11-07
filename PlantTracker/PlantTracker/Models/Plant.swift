@@ -23,12 +23,7 @@ struct Plant {
     }
     
     var isReadyToWater: Bool {
-        if (daysBeforeWatering == 0){
-            return true
-        }
-        else{
-            return false
-        }
+        return daysBeforeWatering == 0
     }
     
     //convert from TimeInterval to # days
@@ -47,6 +42,14 @@ struct Plant {
         return TimeInterval(toSec)
     }
     
+    func calcTimeUntilWater() -> Double{
+        if let targetDate = Calendar.current.date(byAdding: .day, value: Int(duration), to: dateLastWatered) {
+            let secondsToTarget = now.distance(to: targetDate)
+            return secondsToDays(time: secondsToTarget)
+        }
+        return 1.0
+    }
+    
     //initializer:
     //Params: plantName (name of plant), daysBtWatering (days until it needs to be watered)
     //lastWatered: date plant was last watered
@@ -55,6 +58,4 @@ struct Plant {
         duration = daysBtWatering
         dateLastWatered = lastWatered
     }
-    
-    
 }
