@@ -17,8 +17,8 @@ class PlantList {
     }
     
     //sorts the list of plants in order from least to most days until it needs to be watered
-    func sort(){
-        for index in 2...plantList.count {
+    func sortByDuration(){
+        for index in 2...(plantList.count-1) {
             //should be days left to water not duration
             if(plantList[index].duration < plantList[index - 1].duration){
                 //swap
@@ -37,10 +37,13 @@ class PlantList {
                 addPlant(plantToAdd: plantItem)
             }
         }
-        sort()
     }
     
     func getListOfPlants() -> [Plant]{
-        return plantList
+        //sortByDuration()
+        let sortedPlants = plantList.sorted {
+            $0.duration < $1.duration
+        }
+        return sortedPlants
     }
 }
