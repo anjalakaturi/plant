@@ -2,35 +2,35 @@
   {
     "id": "0",
     "plantName": "plant0",
-    "DateLastWatered": "9/9/2022",
+    "DateLastWatered": "11/07/2022",
     "DaysBetweenWatering": "6",
     "plantType": "Snake plant"
   },
   {
     "id": "1",
     "plantName": "plant1",
-    "DateLastWatered": "9/25/2022",
+    "DateLastWatered": "11/07/2022",
     "DaysBetweenWatering": "3",
     "plantType": "Tulip"
   },
   {
     "id": "2",
     "plantName": "plant2",
-    "DateLastWatered": "9/10/2022",
+    "DateLastWatered": "11/04/2022",
     "DaysBetweenWatering": "6",
     "plantType": "Rose"
   },
   {
     "id": "3",
     "plantName": "plant3",
-    "DateLastWatered": "9/14/2022",
+    "DateLastWatered": "11/07/2022",
     "DaysBetweenWatering": "2",
     "plantType": "Basil"
   },
   {
     "id": "4",
     "plantName": "plant4",
-    "DateLastWatered": "9/7/2022",
+    "DateLastWatered": "11/03/2022",
     "DaysBetweenWatering": "10",
     "plantType": "Mint"
   }

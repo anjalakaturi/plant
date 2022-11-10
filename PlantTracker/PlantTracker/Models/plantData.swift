@@ -25,7 +25,7 @@ struct PlantData: Codable {
                 let plantList = try decoder.decode([PlantData].self, from: data)
                 return plantList
             } catch {
-                print("Could not make person from data.", error.localizedDescription)
+                print("Could not make plant from data.", error.localizedDescription)
             }
         }
         return []
