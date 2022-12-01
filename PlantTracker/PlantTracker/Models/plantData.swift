@@ -30,4 +30,13 @@ struct PlantData: Codable {
         }
         return []
     }
+    
+    //TODO: if update fails, how to handle -> crash? assert error?
+    static func updateJSON(){
+        
+    }
+    
+    static func deletePlantFromJSON(){
+        //listOfPlants!.remove(at: 0)
+    }
 }

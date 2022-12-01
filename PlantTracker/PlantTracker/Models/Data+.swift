@@ -17,7 +17,6 @@ extension Data {
         } catch {
             print("Couldn't read JSON file.", error)
         }
-
         return nil
     }
 }

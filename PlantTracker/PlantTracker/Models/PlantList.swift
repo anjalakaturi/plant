@@ -7,13 +7,28 @@
 
 import Foundation
 
-class PlantList {
+class PlantList : ObservableObject {
     var dataList: [PlantData] = PlantData.listOfPlants!
     
-    var plantList: [Plant]
+    @Published var plantList = [Plant]() 
     
     func addPlant(plantToAdd: Plant){
         plantList.append(plantToAdd)
+        plantList = SortedPlants()
+    }
+    
+    func deletePlant(plantToRemove : Plant){
+        //https://stackoverflow.com/questions/24028860/how-to-find-index-of-list-item-in-swift
+        let indexToRemove = plantList.firstIndex{$0 === plantToRemove}
+        plantList.remove(at: indexToRemove!)
+        plantList = SortedPlants()
+    }
+    
+    func updateDateLastWatered(plantWatered : Plant){
+        let plantIndex = plantList.firstIndex{$0 === plantWatered}
+        plantList[plantIndex!].dateLastWatered = Date()
+        plantList = SortedPlants()
+        //TODO: call something to save in json
     }
     
     init(){
@@ -36,9 +51,9 @@ class PlantList {
         }
     }
     
-    func getListOfPlants() -> [Plant]{
+    private func SortedPlants() -> [Plant]{
         let sortedPlants = plantList.sorted {
-            $0.calcTimeUntilWater() < $1.calcTimeUntilWater()
+            $0.timeUntilWater < $1.timeUntilWater
         }
         return sortedPlants
     }

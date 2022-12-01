@@ -8,43 +8,115 @@
 import SwiftUI
 
 struct ContentView: View {
-    var plantlist : [Plant] = PlantList().getListOfPlants()
+    @ObservedObject var plantObject : PlantList = PlantList()
+    @State private var isPresentingAddView = false
+    @State private var isPresentingUpdateView = false
+    @State private var newPlantData = Plant(plantName: "temp", daysBtWatering: 2.0, lastWatered: Date())
+    
     var body: some View {
-        VStack{
-            ForEach(0..<5) { i in
+        List{
+            ForEach(plantObject.plantList) { plant in
                 HStack {
-                    Image(systemName: "leaf")
-                        .imageScale(.large)
-                        .foregroundColor(.accentColor)
-                    var testPlant = plantlist[i]
-                    Text("\(testPlant.name)")
                     Button(action: {
-                        testPlant.plantWatered()
+                        isPresentingUpdateView = true
                     }) {
-                        Text("WATER")
-                            .fontWeight(.bold)
-                            .font(.body)
+                        //Text("WATER")
+                        Image(systemName: "pencil.circle")
+                            //.fontWeight(.bold)
+                            .font(.system(size: 40))
+                            //.padding(5)
+                            //.background(Color.blue)
+                            .cornerRadius(40)
+                            .foregroundColor(Color.blue)
+                            //.padding()
+                    }
+                    .accessibilityLabel("Update Plant")
+                    .buttonStyle(BorderlessButtonStyle())
+                    //.padding()
+                    Spacer()
+                VStack{
+                        Text("\(plant.name)")
+                        .fontWeight(.bold)
+                        .font(.system(size: 20))
+                        //Spacer()
+                        HStack{
+                            Text("Days Until Watering")
+                            Text("\(Int(plant.timeUntilWater))")
+                        }
+                    }
+                    Spacer()
+                    Button(action: {
+                        plantObject.updateDateLastWatered(plantWatered: plant)
+                    }) {
+                        //Text("WATER")
+                        Image(systemName: "drop")
+                            //.fontWeight(.bold)
+                            .font(.system(size: 30))
                             .padding(5)
                             .background(Color.blue)
                             .cornerRadius(40)
                             .foregroundColor(.white)
                             .padding(5)
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 40)
-                                    .stroke(Color.blue, lineWidth: 4)
-                            )
                     }
-                    Text("\(Int(testPlant.calcTimeUntilWater()))")
-                    //Text("\(testPlant.dateLastWatered)")
+                    //.padding()
+                    .accessibilityLabel("Water Plant")
+                    .buttonStyle(BorderlessButtonStyle())
                 }
-                .padding()
             }
         }
+        .toolbar {
+            Button(action:{
+                isPresentingAddView = true}) {
+                        Image(systemName: "plus")
+                    }
+                    .accessibilityLabel("Add Plant")
+                }
+        .sheet(isPresented: $isPresentingAddView) {
+            NavigationView {
+                AddView(currentPlant: newPlantData)
+                                .toolbar {
+                                    ToolbarItem(placement: .cancellationAction) {
+                                        Button("Dismiss") {
+                                            isPresentingAddView = false
+                                        }
+                                    }
+                                    ToolbarItem(placement: .confirmationAction) {
+                                        Button("Add") {
+                                            //check all fields and make sure that they fit
+                                            //save new plant/add to list
+                                            plantObject.addPlant(plantToAdd: newPlantData)
+                                            isPresentingAddView = false
+                                        }
+                                    }
+                                }
+                        }
+                }
+        .sheet(isPresented: $isPresentingUpdateView) {
+            NavigationView {
+                UpdateView(currentPlant: newPlantData)
+                                .toolbar {
+                                    ToolbarItem(placement: .cancellationAction) {
+                                        Button("Dismiss") {
+                                            isPresentingUpdateView = false
+                                        }
+                                    }
+                                    ToolbarItem(placement: .confirmationAction) {
+                                        Button("Update") {
+                                            //check all fields and make sure that they fit
+                                            //save new plant/add to list
+                                            isPresentingUpdateView = false
+                                        }
+                                    }
+                                }
+                        }
+                }
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        NavigationView {
+            ContentView()
+        }
     }
 }
