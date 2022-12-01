@@ -8,10 +8,15 @@
 import SwiftUI
 
 struct ContentView: View {
-    @ObservedObject var plantObject : PlantList = PlantList()
+    @ObservedObject var plantObject : PlantList //= PlantList()
+    @Environment(\.scenePhase) private var scenePhase
+    let saveAction: ()->Void
     @State private var isPresentingAddView = false
     @State private var isPresentingUpdateView = false
-    @State private var newPlantData = Plant(plantName: "temp", daysBtWatering: 2.0, lastWatered: Date())
+    @State private var newPlantData = Plant(plantName: "", daysBtWatering: 0.0, lastWatered: Date())
+    @State private var tempPlantData = Plant(plantName: "", daysBtWatering: 0.0, lastWatered: Date())
+    @State private var emptyPlantData = Plant(plantName: "", daysBtWatering: 0.0, lastWatered: Date())
+    @State private var updateIndex = 0
     
     var body: some View {
         List{
@@ -19,6 +24,10 @@ struct ContentView: View {
                 HStack {
                     Button(action: {
                         isPresentingUpdateView = true
+                        tempPlantData.name = plant.name
+                        tempPlantData.duration = plant.duration
+                        tempPlantData.dateLastWatered = plant.dateLastWatered
+                        updateIndex = plantObject.getPlantIndex(plantToFind: plant)
                     }) {
                         //Text("WATER")
                         Image(systemName: "pencil.circle")
@@ -40,7 +49,7 @@ struct ContentView: View {
                         .font(.system(size: 20))
                         //Spacer()
                         HStack{
-                            Text("Days Until Watering")
+                            Text("Days Until Watering:")
                             Text("\(Int(plant.timeUntilWater))")
                         }
                     }
@@ -48,7 +57,6 @@ struct ContentView: View {
                     Button(action: {
                         plantObject.updateDateLastWatered(plantWatered: plant)
                     }) {
-                        //Text("WATER")
                         Image(systemName: "drop")
                             //.fontWeight(.bold)
                             .font(.system(size: 30))
@@ -77,6 +85,9 @@ struct ContentView: View {
                                 .toolbar {
                                     ToolbarItem(placement: .cancellationAction) {
                                         Button("Dismiss") {
+                                            newPlantData.name = emptyPlantData.name
+                                            newPlantData.duration = emptyPlantData.duration
+                                            newPlantData.dateLastWatered = emptyPlantData.dateLastWatered
                                             isPresentingAddView = false
                                         }
                                     }
@@ -85,6 +96,9 @@ struct ContentView: View {
                                             //check all fields and make sure that they fit
                                             //save new plant/add to list
                                             plantObject.addPlant(plantToAdd: newPlantData)
+                                            newPlantData.name = emptyPlantData.name
+                                            newPlantData.duration = emptyPlantData.duration
+                                            newPlantData.dateLastWatered = emptyPlantData.dateLastWatered
                                             isPresentingAddView = false
                                         }
                                     }
@@ -93,22 +107,31 @@ struct ContentView: View {
                 }
         .sheet(isPresented: $isPresentingUpdateView) {
             NavigationView {
-                UpdateView(currentPlant: newPlantData)
+                UpdateView(currentPlant: tempPlantData)
                                 .toolbar {
                                     ToolbarItem(placement: .cancellationAction) {
                                         Button("Dismiss") {
+                                            tempPlantData.name = emptyPlantData.name
+                                            tempPlantData.duration = emptyPlantData.duration
+                                            tempPlantData.dateLastWatered = emptyPlantData.dateLastWatered
                                             isPresentingUpdateView = false
                                         }
                                     }
                                     ToolbarItem(placement: .confirmationAction) {
                                         Button("Update") {
                                             //check all fields and make sure that they fit
-                                            //save new plant/add to list
+                                            plantObject.updateInformation(updatedPlant: tempPlantData, index: updateIndex)
+                                            tempPlantData.name = emptyPlantData.name
+                                            tempPlantData.duration = emptyPlantData.duration
+                                            tempPlantData.dateLastWatered = emptyPlantData.dateLastWatered
                                             isPresentingUpdateView = false
                                         }
                                     }
                                 }
                         }
+                }
+        .onChange(of: scenePhase) { phase in
+                    if phase == .inactive { saveAction() }
                 }
     }
 }
@@ -116,7 +139,7 @@ struct ContentView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            ContentView()
+            ContentView(plantObject: PlantList(), saveAction: {(()->Void).self})
         }
     }
 }

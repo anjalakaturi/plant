@@ -12,22 +12,24 @@ struct PlantData: Codable {
     var plantName: String
     var DateLastWatered: String
     var DaysBetweenWatering: String
-    var plantType: String
+    //var plantType: String
     
-    static var listOfPlants: [PlantData]? {
-        PlantData.fromJSON(named: "plantInfo")
-    }
+//    static func listOfPlants(named: String) -> [PlantData] {
+//        return PlantData.fromJSON(named: "plantInfo")
+//    }
 
-    static func fromJSON(named name: String) -> [PlantData] {
-        if let data = Data.fromJSONFile(forName: name) {
+    //static func fromJSON(named name: String) -> [PlantData] {
+    static func fromJSON(file: FileHandle) -> [PlantData] {
+        //if let data = Data.fromJSONFile(forName: name) {
             let decoder = JSONDecoder()
             do {
-                let plantList = try decoder.decode([PlantData].self, from: data)
+                //let plantList = try decoder.decode([PlantData].self, from: data)
+                let plantList = try decoder.decode([PlantData].self, from: file.availableData)
                 return plantList
             } catch {
                 print("Could not make plant from data.", error.localizedDescription)
             }
-        }
+        //}
         return []
     }
     
@@ -38,5 +40,12 @@ struct PlantData: Codable {
     
     static func deletePlantFromJSON(){
         //listOfPlants!.remove(at: 0)
+    }
+    
+    init(id: String, plantName: String, DateLastWatered: String, DaysBetweenWatering: String) {
+        self.id = id
+        self.plantName = plantName
+        self.DateLastWatered = DateLastWatered
+        self.DaysBetweenWatering = DaysBetweenWatering
     }
 }
