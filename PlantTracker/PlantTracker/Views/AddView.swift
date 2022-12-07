@@ -11,6 +11,8 @@ import SwiftUI
 struct AddView: View {
     @State var currentPlant: Plant
     @State private var isEditing = false
+    @ObservedObject var slider : SliderData
+
     var body: some View {
         //https://developer.apple.com/tutorials/app-dev-training/creating-a-navigation-hierarchy
         VStack{
@@ -27,23 +29,29 @@ struct AddView: View {
                     Spacer()
                     VStack {
                         Slider(
-                            value: $currentPlant.duration,
-                            in: 0...60,
+                            value: $slider.sliderValue,
+                            in: 1...60,
                             step: 1
                         ) {
-                            Text("Speed")
+                            Text("Watering Frequency")
                         } minimumValueLabel: {
-                            Text("0")
+                            Text("1")
                         } maximumValueLabel: {
                             Text("60")
                         } onEditingChanged: { editing in
                             isEditing = editing
+                            currentPlant.duration = slider.sliderValue
                         }
-                        Text("\(Int(currentPlant.duration)) Days In Between Watering")
-                            .foregroundColor(isEditing ? .red : .black)
+                        if(slider.sliderValue == 1.0){
+                            Text(String(Int(slider.sliderValue)) + " Day In Between Watering")
+                                .foregroundColor(isEditing ? .red : .black)
+                        }
+                        else{
+                            Text(String(Int(slider.sliderValue)) + " Days In Between Watering")
+                                .foregroundColor(isEditing ? .red : .black)
+                        }
                     }
                 }
-                    
                 HStack {
                     Image(systemName: "calendar")
                         .foregroundColor(.accentColor)
@@ -51,17 +59,18 @@ struct AddView: View {
                     DatePicker(
                             "Date Last Watered",
                             selection: $currentPlant.dateLastWatered,
+                            in: ...Date(),
                             displayedComponents: [.date]
                         )
                 }
-//                HStack {
-//                    Label("Notes", systemImage: "pencil")
-//                    Spacer()
-//                    Text("")
-//                }
+                HStack{
+                    Image(systemName: "list.clipboard")
+                        .foregroundColor(.accentColor)
+                    Spacer()
+                    TextField("Notes", text: $currentPlant.notes)
+                }
                 .accessibilityElement(children: .combine)
             }
-            //.collapsible(false)
         }
         .navigationTitle("Add New Plant")
         }
@@ -71,7 +80,7 @@ struct AddView: View {
 struct AddView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            AddView(currentPlant: Plant(plantName: "", daysBtWatering: 2.0, lastWatered: Date()))
+            AddView(currentPlant: Plant(plantName: "", daysBtWatering: 2.0, lastWatered: Date(), notes: ""), slider: SliderData(sliderValue: 1.0))
         }
     }
 }

@@ -13,16 +13,13 @@ class PlantList : ObservableObject {
     @Published var plantList = [Plant]() 
     
     func addPlant(plantToAdd: Plant){
-        let newPlant = Plant(plantName: plantToAdd.name, daysBtWatering: plantToAdd.duration, lastWatered: plantToAdd.dateLastWatered)
+        let newPlant = Plant(plantName: plantToAdd.name, daysBtWatering: plantToAdd.duration, lastWatered: plantToAdd.dateLastWatered, notes: plantToAdd.notes)
         plantList.append(newPlant)
         plantList = SortedPlants()
-        
     }
     
-    func deletePlant(plantToRemove : Plant){
-        //https://stackoverflow.com/questions/24028860/how-to-find-index-of-list-item-in-swift
-        let indexToRemove = plantList.firstIndex{$0 === plantToRemove}
-        plantList.remove(at: indexToRemove!)
+    func deletePlant(plantToRemove : Plant, index: Int){
+        plantList.remove(at: index)
         plantList = SortedPlants()
     }
     
@@ -46,6 +43,7 @@ class PlantList : ObservableObject {
     }
     
     func getPlantIndex(plantToFind : Plant) -> Int{
+        //https://stackoverflow.com/questions/24028860/how-to-find-index-of-list-item-in-swift
         let plantIndex = plantList.firstIndex{$0 === plantToFind}
         return plantIndex!
     }
@@ -92,11 +90,11 @@ class PlantList : ObservableObject {
                         if let dur = Double(dataItem.DaysBetweenWatering) {
                             if dateFormatter.date(from: dataItem.DateLastWatered) != nil {
                                 print(dateFormatter.date(from: dataItem.DateLastWatered) as Any)
-                                let plantItem = Plant(plantName: dataItem.plantName, daysBtWatering: dur, lastWatered: dateFormatter.date(from: dataItem.DateLastWatered)!)
+                                let plantItem = Plant(plantName: dataItem.plantName, daysBtWatering: dur, lastWatered: dateFormatter.date(from: dataItem.DateLastWatered)!, notes: dataItem.notes)
                                 plantListConstructor.append(plantItem)
                             }
                             else{
-                                let plantItem = Plant(plantName: "Example Plant", daysBtWatering: dur, lastWatered: Date())
+                                let plantItem = Plant(plantName: "Example Plant", daysBtWatering: dur, lastWatered: Date(), notes: "")
                                 plantListConstructor.append(plantItem)
                             }
                         }
@@ -120,7 +118,7 @@ class PlantList : ObservableObject {
                     dateFormatter.dateFormat = "MM/dd/yyyy"
                     for p in plantList{
                         //plantListString.append(PlantData(id: String(p.id), plantName: p.name, DateLastWatered: String(p.dateLastWatered), DaysBetweenWatering: String(p.duration)))
-                        plantListString.append(PlantData(id: p.id.uuidString, plantName: p.name, DateLastWatered: dateFormatter.string(from: p.dateLastWatered), DaysBetweenWatering: String(p.duration)))
+                        plantListString.append(PlantData(id: p.id.uuidString, plantName: p.name, DateLastWatered: dateFormatter.string(from: p.dateLastWatered), DaysBetweenWatering: String(p.duration), notes: p.notes))
                     }
                     let data = try JSONEncoder().encode(plantListString)
                     let outfile = try fileURL()

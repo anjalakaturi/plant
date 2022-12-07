@@ -13,9 +13,8 @@ class Plant : Identifiable, ObservableObject {
     @Published var name: String //name of plant
     @Published var duration: Double //time (days) between watering
     @Published var dateLastWatered: Date //date last watered
+    @Published var notes: String //additional notes about plant
     
-    //static var all: [Plant] = PlantList().plantList
-
     //dateLastWatered + duration = new date
     //days from today till new date
     var daysBeforeWatering: Double {
@@ -46,9 +45,12 @@ class Plant : Identifiable, ObservableObject {
     }
     
     var timeUntilWater : Double{
+        if(dateLastWatered == Date()){
+            return duration
+        }
         if let targetDate = Calendar.current.date(byAdding: .day, value: Int(duration), to: dateLastWatered) {
             let secondsToTarget = now.distance(to: targetDate)
-            return secondsToDays(time: secondsToTarget)
+            return secondsToDays(time: secondsToTarget) - 1.0
         }
         return 1.0
     }
@@ -56,9 +58,10 @@ class Plant : Identifiable, ObservableObject {
     //initializer:
     //Params: plantName (name of plant), daysBtWatering (days until it needs to be watered)
     //lastWatered: date plant was last watered
-    init(plantName: String, daysBtWatering: Double, lastWatered: Date){
-        name = plantName
-        duration = daysBtWatering
-        dateLastWatered = lastWatered
+    init(plantName: String, daysBtWatering: Double, lastWatered: Date, notes: String){
+        self.name = plantName
+        self.duration = daysBtWatering
+        self.dateLastWatered = lastWatered
+        self.notes = notes
     }
 }
