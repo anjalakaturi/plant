@@ -7,27 +7,30 @@
 
 import Foundation
 
+//Gets info from JSON as strings -> gets converted to Plant objects 
 struct PlantData: Codable {
     var id: String
     var plantName: String
     var DateLastWatered: String
     var DaysBetweenWatering: String
-    var plantType: String
-    
-    static var listOfPlants: [PlantData]? {
-        PlantData.fromJSON(named: "plantInfo")
-    }
+    var notes: String
 
-    static func fromJSON(named name: String) -> [PlantData] {
-        if let data = Data.fromJSONFile(forName: name) {
-            let decoder = JSONDecoder()
-            do {
-                let plantList = try decoder.decode([PlantData].self, from: data)
-                return plantList
-            } catch {
-                print("Could not make plant from data.", error.localizedDescription)
-            }
+    static func fromJSON(file: FileHandle) -> [PlantData] {
+        let decoder = JSONDecoder()
+        do {
+            let plantList = try decoder.decode([PlantData].self, from: file.availableData)
+            return plantList
+        } catch {
+            print("Could not make plant from data.", error.localizedDescription)
         }
         return []
+    }
+    
+    init(id: String, plantName: String, DateLastWatered: String, DaysBetweenWatering: String, notes: String) {
+        self.id = id
+        self.plantName = plantName
+        self.DateLastWatered = DateLastWatered
+        self.DaysBetweenWatering = DaysBetweenWatering
+        self.notes = notes
     }
 }

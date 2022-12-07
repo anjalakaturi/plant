@@ -45,7 +45,7 @@ struct PlantRow: View {
 
 struct PlantRow_Previews: PreviewProvider {
     static var previews: some View {
-        PlantRow(plant: Plant(plantName: "Plant Name", daysBtWatering: 7.0, lastWatered: Date()))
+        PlantRow(plant: Plant(plantName: "Plant Name", daysBtWatering: 7.0, lastWatered: Date(), notes: ""))
         
     }
 }
